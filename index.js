@@ -13,6 +13,17 @@ connectDB();
 app.use(morgan('dev'));
 app.use(express.json({ extended: false }));
 
+// cors
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // routes
 app.use('/api/users', usersRoutes);
 app.use('/api/orders', ordersRoutes);
