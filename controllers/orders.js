@@ -1,8 +1,8 @@
 const ordersService = require('../services/orders');
 
-const getAll = async (req, res) => {
+const get = async (req, res) => {
   try {
-    const result = await ordersService.getAll();
+    const result = await ordersService.get();
     res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({
@@ -14,9 +14,9 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {
-      body: { ref, cart, address, phone },
+      body: { ref, cart, address, city, phone },
     } = req;
-    const result = await ordersService.create(ref, cart, address, phone);
+    const result = await ordersService.create(ref, cart, address, city, phone);
     res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({
@@ -25,20 +25,20 @@ const create = async (req, res) => {
   }
 };
 
-// const update = async (req, res) => {
-//   try {
-//     const {
-//       params: { id },
-//       body: fields
-//     } = req;
-//     const result = await ordersService.update(id, fields, "$set");
-//     res.status(200).json(result);
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: "Server Error"
-//     });
-//   }
-// };
+const update = async (req, res) => {
+  try {
+    const {
+      params: { ref },
+      body: fields,
+    } = req;
+    const result = await ordersService.update(ref, fields, '$set');
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Server Error',
+    });
+  }
+};
 
 // const remove = async (req, res) => {
 //   try {
@@ -54,4 +54,4 @@ const create = async (req, res) => {
 //   }
 // };
 
-module.exports = { getAll, create };
+module.exports = { get, create, update };
