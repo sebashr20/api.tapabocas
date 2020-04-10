@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
   ref: { type: String, required: true },
@@ -12,4 +12,4 @@ const orderSchema = new Schema({
   phone: { type: Number, required: true },
 });
 
-module.exports = model("Order", orderSchema);
+module.exports = model('Order', orderSchema);

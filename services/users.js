@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
 const getAll = async () => {
   const users = await User.find();
@@ -9,7 +9,7 @@ const create = async (email, firstName, lastName) => {
   const user = await User.create({
     email: email,
     firstName: firstName,
-    lastName: lastName
+    lastName: lastName,
   });
   return user;
 };
@@ -23,7 +23,7 @@ const update = async (id, field, method) => {
   return user;
 };
 
-const remove = async id => {
+const remove = async (id) => {
   await User.findByIdAndRemove(id);
   return null;
 };

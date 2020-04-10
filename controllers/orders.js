@@ -1,4 +1,4 @@
-const ordersService = require("../services/orders");
+const ordersService = require('../services/orders');
 
 const getAll = async (req, res) => {
   try {
@@ -6,7 +6,7 @@ const getAll = async (req, res) => {
     res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({
-      message: "Server Error",
+      message: 'Server Error',
     });
   }
 };
@@ -20,7 +20,7 @@ const create = async (req, res) => {
     res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({
-      message: "Server Error",
+      message: 'Server Error',
     });
   }
 };
