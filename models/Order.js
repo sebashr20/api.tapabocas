@@ -12,6 +12,11 @@ const orderSchema = new Schema({
   city: { type: String, required: true, default: null },
   phone: { type: Number, required: true, default: null },
   status: { type: String, required: false, default: 'PENDING' },
+  paymentMethod: {
+    type: String,
+    required: false,
+    default: 'BANCOLOMBIA_QR_CODE',
+  },
   createdAt: { type: String, required: false, default: null },
 });
 
