@@ -17,6 +17,7 @@ const orderSchema = new Schema({
     required: false,
     default: 'BANCOLOMBIA_QR_CODE',
   },
+  wompiId: { type: String, required: false, default: null },
   createdAt: { type: String, required: false, default: null },
 });
 
