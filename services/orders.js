@@ -13,6 +13,7 @@ const create = async (ref, cart, address, city, phone, paymentMethod) => {
     city: city,
     phone: phone,
     paymentMethod: paymentMethod,
+    createdAt: new Date().toString().substr(0, 24),
   });
   return order;
 };
