@@ -5,6 +5,11 @@ const get = async () => {
   return orders;
 };
 
+const getByRef = async (ref) => {
+  const orders = await Order.findOne({ ref: ref });
+  return orders;
+};
+
 const create = async (ref, cart, address, city, phone, paymentMethod) => {
   const order = await Order.create({
     ref: ref,
@@ -32,4 +37,4 @@ const update = async (ref, field, method) => {
 //   return null;
 // };
 
-module.exports = { get, create, update };
+module.exports = { get, getByRef, create, update };

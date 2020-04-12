@@ -16,6 +16,10 @@ const create = async (req, res) => {
     const {
       body: { ref, cart, address, city, phone, paymentMethod },
     } = req;
+    const existingOrder = await ordersService.getByRef(ref);
+    if (existingOrder) {
+      return null;
+    }
     const result = await ordersService.create(
       ref,
       cart,
