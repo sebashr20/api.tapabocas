@@ -1,17 +1,35 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-const getAll = async () => {
+const get = async () => {
   const users = await User.find();
   return users;
 };
 
-const create = async (email, firstName, lastName) => {
+const getByEmail = async (email) => {
+  const user = await User.findOne({ email: email });
+  return user;
+};
+
+const create = async (email, password) => {
+  const hashedPassword = await bcrypt.hash(password, 12);
   const user = await User.create({
     email: email,
-    firstName: firstName,
-    lastName: lastName,
+    password: hashedPassword,
   });
   return user;
+};
+
+const login = async (user) => {
+  const token = await jwt.sign(
+    { userId: user.id, email: user.email },
+    'jwtsecretkey',
+    {
+      expiresIn: '1h',
+    }
+  );
+  return { userId: user.id, token, tokenExp: 1 };
 };
 
 const update = async (id, field, method) => {
@@ -28,4 +46,4 @@ const remove = async (id) => {
   return null;
 };
 
-module.exports = { getAll, create, update, remove };
+module.exports = { get, getByEmail, create, update, remove, login };

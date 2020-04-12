@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const { connectDB } = require('./db');
 const usersRoutes = require('./routes/users');
 const ordersRoutes = require('./routes/orders');
+const isAuth = require('./middleware/isAuth');
 const app = express();
 
 // connect database
@@ -12,6 +13,7 @@ connectDB();
 // init middleware
 app.use(morgan('dev'));
 app.use(express.json({ extended: false }));
+app.use(isAuth);
 
 // cors
 app.use((req, res, next) => {

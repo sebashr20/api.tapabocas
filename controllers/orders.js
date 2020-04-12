@@ -1,6 +1,11 @@
 const ordersService = require('../services/orders');
 
 const get = async (req, res) => {
+  // if (!req.isAuth) {
+  //   return res.status(401).json({
+  //     message: 'Unauthenticated',
+  //   });
+  // }
   try {
     const result = await ordersService.get();
     res.status(200).json(result);

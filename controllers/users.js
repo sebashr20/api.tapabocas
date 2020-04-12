@@ -1,8 +1,9 @@
+const bcrypt = require('bcryptjs');
 const usersService = require('../services/users');
 
-const getAll = async (req, res) => {
+const get = async (req, res) => {
   try {
-    const result = await usersService.getAll();
+    const result = await usersService.get();
     res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({
@@ -14,14 +15,44 @@ const getAll = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {
-      body: { email, firstName, lastName },
+      body: { email, password },
     } = req;
-    const result = await usersService.create(email, firstName, lastName);
+    const existingUser = await usersService.getByEmail(email);
+    if (existingUser) {
+      return res.status(401).json({
+        message: 'User already exists',
+      });
+    }
+    const result = await usersService.create(email, password);
     res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({
       message: 'Server Error',
     });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const {
+      body: { email, password },
+    } = req;
+    const user = await usersService.getByEmail(email);
+    if (!user) {
+      return res.status(401).json({
+        message: 'User does not exists',
+      });
+    }
+    const isEqual = await bcrypt.compare(password, user.password);
+    if (!isEqual) {
+      return res.status(401).json({
+        message: 'Password is incorrect',
+      });
+    }
+    const result = await usersService.login(user, password);
+    res.status(200).json(result);
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -54,4 +85,4 @@ const remove = async (req, res) => {
   }
 };
 
-module.exports = { getAll, create, update, remove };
+module.exports = { get, create, update, remove, login };

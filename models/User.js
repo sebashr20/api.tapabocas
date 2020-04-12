@@ -8,8 +8,7 @@ const userSchema = new Schema({
     unique: true,
     sparse: true,
   },
-  firstName: { type: String, default: null },
-  lastName: { type: String, default: null },
+  password: { type: String, required: true },
 });
 
 module.exports = model('User', userSchema);
