@@ -14,9 +14,16 @@ const get = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {
-      body: { ref, cart, address, city, phone },
+      body: { ref, cart, address, city, phone, paymentMethod },
     } = req;
-    const result = await ordersService.create(ref, cart, address, city, phone);
+    const result = await ordersService.create(
+      ref,
+      cart,
+      address,
+      city,
+      phone,
+      paymentMethod
+    );
     res.status(201).json(result);
   } catch (error) {
     return res.status(500).json({

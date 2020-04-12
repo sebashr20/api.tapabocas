@@ -5,13 +5,14 @@ const get = async () => {
   return orders;
 };
 
-const create = async (ref, cart, address, city, phone) => {
+const create = async (ref, cart, address, city, phone, paymentMethod) => {
   const order = await Order.create({
     ref: ref,
     cart: cart,
     address: address,
     city: city,
     phone: phone,
+    paymentMethod: paymentMethod,
   });
   return order;
 };
