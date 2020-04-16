@@ -16,6 +16,7 @@ const compose = async (emailData, type) => {
 };
 
 const send = async (emailData) => {
+  console.log(emailData);
   const { to, from, subject, body, templateId } = emailData;
   const msg = {
     to: to,
