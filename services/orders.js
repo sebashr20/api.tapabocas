@@ -34,9 +34,4 @@ const update = async (ref, field, method) => {
   return order;
 };
 
-// const remove = async id => {
-//   await User.findByIdAndRemove(id);
-//   return null;
-// };
-
 module.exports = { get, getByRef, create, update };
