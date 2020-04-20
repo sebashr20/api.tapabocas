@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const usersService = require('../services/users');
+const emailService = require('../services/email');
 
 const get = async (req, res) => {
   try {
@@ -85,4 +86,25 @@ const remove = async (req, res) => {
   }
 };
 
-module.exports = { get, create, update, remove, login };
+const sendEmail = async (req, res) => {
+  try {
+    const {
+      body: { to, from, subject, body, type },
+    } = req;
+    const emailData = { to, from, subject, body };
+    const result = await emailService.compose(emailData, type);
+    if (result === 202) {
+      return res.status(200).json('Message sent');
+    } else {
+      return res.status(500).json({
+        message: 'Message could not be sent',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Server Error',
+    });
+  }
+};
+
+module.exports = { get, create, update, remove, login, sendEmail };

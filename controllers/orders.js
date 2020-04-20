@@ -47,7 +47,8 @@ const update = async (req, res) => {
       params: { ref },
       body: fields,
     } = req;
-    const result = await ordersService.update(ref, fields, '$set');
+    await ordersService.update(ref, fields, '$set');
+    const result = await ordersService.get();
     res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({
@@ -55,19 +56,5 @@ const update = async (req, res) => {
     });
   }
 };
-
-// const remove = async (req, res) => {
-//   try {
-//     const {
-//       params: { id }
-//     } = req;
-//     const result = await ordersService.remove(id);
-//     res.status(204).json(result);
-//   } catch (err) {
-//     return res.status(500).json({
-//       message: "Server Error"
-//     });
-//   }
-// };
 
 module.exports = { get, create, update };
