@@ -10,13 +10,16 @@ const compose = async (emailData, type) => {
     emailData.templateId = 'd-e271caa3216f4c7688a721209843c328';
     const result = await send(emailData);
     return result;
+  } else if (type === 'distributor') {
+    emailData.templateId = 'd-69b591ef006546c58002826c8715dd79';
+    const result = await sendDistributor(emailData);
+    return result;
   } else {
     throw new Error('Wrong type');
   }
 };
 
 const send = async (emailData) => {
-  console.log(emailData);
   const { to, from, subject, body, templateId } = emailData;
   const msg = {
     to: to,
@@ -25,6 +28,32 @@ const send = async (emailData) => {
     dynamic_template_data: {
       subject: subject,
       body: body,
+    },
+  };
+  const res = await sgMail.send(msg);
+  const { statusCode } = res[0];
+  return statusCode;
+};
+
+const sendDistributor = async (emailData) => {
+  const { to, from, subject, body, templateId } = emailData;
+  const msg = {
+    to: to,
+    from: from,
+    templateId: templateId,
+    dynamic_template_data: {
+      subject: subject,
+      name: body.name,
+      phone: body.phone,
+      email: body.email,
+      city: body.city,
+      capacity: body.capacity,
+      price: body.price,
+      plusInfo: body.plusInfo,
+      agent: body.agent,
+      source: body.source,
+      products: body.products,
+      file: body.file,
     },
   };
   const res = await sgMail.send(msg);
