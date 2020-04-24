@@ -10,9 +10,9 @@ const compose = async (emailData, type) => {
     emailData.templateId = 'd-e271caa3216f4c7688a721209843c328';
     const result = await send(emailData);
     return result;
-  } else if (type === 'distributor') {
+  } else if (type === 'provider') {
     emailData.templateId = 'd-69b591ef006546c58002826c8715dd79';
-    const result = await sendDistributor(emailData);
+    const result = await sendProvider(emailData);
     return result;
   } else {
     throw new Error('Wrong type');
@@ -35,7 +35,7 @@ const send = async (emailData) => {
   return statusCode;
 };
 
-const sendDistributor = async (emailData) => {
+const sendProvider = async (emailData) => {
   const { to, from, subject, body, templateId } = emailData;
   const msg = {
     to: to,
