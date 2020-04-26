@@ -38,10 +38,6 @@ const compose = async (emailData, type) => {
     };
     const result = await send(msg);
     return result;
-  } else if (type === 'order') {
-    emailData.templateId = 'd-e271caa3216f4c7688a721209843c328';
-    const result = await send(emailData);
-    return result;
   } else if (type === 'institutional') {
     const { to, from, subject, body } = emailData;
     const msg = {
@@ -54,6 +50,19 @@ const compose = async (emailData, type) => {
         phone: body.phone,
         email: body.email,
         text: body.text,
+      },
+    };
+    const result = await send(msg);
+    return result;
+  } else if (type === 'order') {
+    const { to, from, subject, body } = emailData;
+    const msg = {
+      to: to,
+      from: from,
+      templateId: 'd-e271caa3216f4c7688a721209843c328',
+      dynamic_template_data: {
+        subject: subject,
+        body: body,
       },
     };
     const result = await send(msg);

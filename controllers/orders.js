@@ -1,13 +1,21 @@
 const ordersService = require('../services/orders');
 
 const get = async (req, res) => {
-  // if (!req.isAuth) {
-  //   return res.status(401).json({
-  //     message: 'Unauthenticated',
-  //   });
-  // }
   try {
     const result = await ordersService.get();
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Server Error',
+    });
+  }
+};
+const getByRef = async (req, res) => {
+  try {
+    const {
+      params: { ref },
+    } = req;
+    const result = await ordersService.getByRef(ref);
     res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({
@@ -19,7 +27,7 @@ const get = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {
-      body: { ref, cart, address, city, phone, paymentMethod },
+      body: { ref, cart, email, address, city, phone, paymentMethod },
     } = req;
     const existingOrder = await ordersService.getByRef(ref);
     if (existingOrder) {
@@ -28,6 +36,7 @@ const create = async (req, res) => {
     const result = await ordersService.create(
       ref,
       cart,
+      email,
       address,
       city,
       phone,
@@ -57,4 +66,4 @@ const update = async (req, res) => {
   }
 };
 
-module.exports = { get, create, update };
+module.exports = { get, getByRef, create, update };

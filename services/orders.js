@@ -10,10 +10,19 @@ const getByRef = async (ref) => {
   return orders;
 };
 
-const create = async (ref, cart, address, city, phone, paymentMethod) => {
+const create = async (
+  ref,
+  cart,
+  email,
+  address,
+  city,
+  phone,
+  paymentMethod
+) => {
   const order = await Order.create({
     ref: ref,
     cart: cart,
+    email: email,
     address: address,
     city: city,
     phone: phone,
